@@ -33,8 +33,9 @@ sh ./download-bucket.s3.sh
 
 Variables
 ```
+# Variables
 SOURCE_BUCKET="xxx"
-LOCAL_FOLDER="/tmp/local-s3-backup"
-ZIP_FILE="/tmp/bucket-backup.zip"
-DESTINATION_BUCKET="xxx"
+SCRIPT_DIR=$(pwd)
+LOCAL_FOLDER="$SCRIPT_DIR/$SOURCE_BUCKET"
+ZIP_FILE="$SCRIPT_DIR/${SOURCE_BUCKET}-backup.zip"
 ```
