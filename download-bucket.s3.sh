@@ -1,23 +1,26 @@
 #!/bin/bash
 
-# Variables
-SOURCE_BUCKET="ofl-development-terraform-state"
+read -p "Introduce el nombre del bucket S3 a respaldar: " SOURCE_BUCKET
+
+if [ -z "$SOURCE_BUCKET" ]; then
+  echo "❌ Error: El nombre del bucket no puede estar vacío."
+  exit 1
+fi
+
 SCRIPT_DIR=$(pwd)
 LOCAL_FOLDER="$SCRIPT_DIR/$SOURCE_BUCKET"
 ZIP_FILE="$SCRIPT_DIR/${SOURCE_BUCKET}-backup.zip"
 
-# Solo se usa para volver a subir el zip a un bucket
-#DESTINATION_BUCKET="ofl-development-admin-web"
-
-# Carpeta con el contenido
 mkdir -p $LOCAL_FOLDER
 
-# Sincronizar S3 con carpeta LOCAL_FOLDER
+echo "🔄 Descargando contenido de s3://$SOURCE_BUCKET ..."
 aws s3 sync s3://$SOURCE_BUCKET $LOCAL_FOLDER
 
-# Crear un archivo zip del contenido descargado
+echo "📦 Comprimiendo contenido en $ZIP_FILE ..."
 cd $SCRIPT_DIR
-zip -r $ZIP_FILE $SOURCE_BUCKET
+zip -r "$ZIP_FILE" "$SOURCE_BUCKET"
 
-# Borrar carpeta
-rm -rf $LOCAL_FOLDER
+echo "🧹 Limpiando carpeta temporal..."
+rm -rf "$LOCAL_FOLDER"
+
+echo "✅ Backup completado: $ZIP_FILE"
