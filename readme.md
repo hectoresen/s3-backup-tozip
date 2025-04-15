@@ -57,3 +57,37 @@ Lanza el script:
 Se te pedirá que introduzcas el nombre del bucket que quieres respaldar.
 
 ---
+---
+
+## ☁️ Subir una carpeta a un bucket S3
+
+Este script sube el contenido de una carpeta local (incluyendo subcarpetas y archivos) a un bucket de S3, **manteniendo la estructura de directorios** pero sin incluir la carpeta raíz.
+
+---
+
+### 🔐 Permisos de ejecución
+
+Solo la primera vez:
+
+```bash
+chmod +x upload-folder.s3.sh
+```
+
+---
+
+### 🚀 Ejecución
+
+Lanza el script:
+
+```bash
+./upload-folder.s3.sh
+```
+
+Se te pedirá:
+
+1. La ruta de la carpeta madre que deseas subir (por ejemplo: `./CarpetaMadre`)
+2. El nombre del bucket S3 de destino.
+
+El contenido se subirá tal cual está dentro de esa carpeta, sin que la carpeta raíz se incluya en la ruta en S3.
+
+---
